@@ -4,10 +4,7 @@ class Tag < ActiveRecord::Base
   validates_format_of :name, :with => /[^.]+/
 
   scope :ordered_all, lambda {
-    select('DISTINCT *, count(posts_tags.post_id) AS post_count')
-      .joins(:posts)
-      .group('tags.name, tags.id')
-      .order('post_count DESC')
+    all.joins(:posts).group('tags.name').order('COUNT(*) DESC')
   }
 
   def self.clean_unassociated
