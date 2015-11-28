@@ -4,7 +4,7 @@ class Tag < ActiveRecord::Base
   validates_format_of :name, :with => /[^.]+/
 
   scope :ordered_all, lambda {
-    select('*, count(posts.id) AS post_count')
+    select('DISTINCT *, count(posts.id) AS post_count')
       .joins(:posts)
       .group('tags.name, tags.id')
       .order('post_count DESC')
