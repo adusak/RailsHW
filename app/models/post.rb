@@ -12,6 +12,7 @@ class Post < ActiveRecord::Base
   attr_accessor :post_tags_string
 
   before_save :parse_tags
+  before_destroy :decrement_post_counter
   after_commit { Tag.clean_unassociated }
 
   validates :author, presence: true
@@ -25,6 +26,12 @@ class Post < ActiveRecord::Base
     tags.map(&:name) * ', '
   end
 
+
+  private
+  def decrement_post_counter
+    tags.each { |t| t.decrement!(:post_count) }
+  end
+
   private
 
   def parse_tags
@@ -32,6 +39,7 @@ class Post < ActiveRecord::Base
     my_tags = post_tags_string.split(/[\s,.]+/).map(&:strip)
     my_tags.each do |name|
       t = Tag.find_or_create_by(name: name)
+      t.increment(:post_count)
       t.save
       tags << t unless tags.include?(t)
     end
