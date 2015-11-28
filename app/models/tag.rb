@@ -6,7 +6,7 @@ class Tag < ActiveRecord::Base
   scope :ordered_all, lambda {
     select('*, count(posts.id) AS post_count')
       .joins(:posts)
-      .group('tags.id')
+      .group('tags.name, tags.id')
       .order('post_count DESC')
   }
 
