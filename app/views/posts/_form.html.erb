@@ -1,54 +1,10 @@
-<%= form_for @post, :html => {:class => "form-horizontal post"} do |f| %>
-
-    <% if @post.errors.any? %>
-        <div id="error_expl" class="panel panel-danger">
-          <div class="panel-heading">
-            <h3 class="panel-title"><%= pluralize(@post.errors.count, "error") %> prohibited this post from being
-              saved:</h3>
-          </div>
-          <div class="panel-body">
-            <ul>
-              <% @post.errors.full_messages.each do |msg| %>
-                  <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-    <% end %>
-
-    <div class="control-group">
-      <%= f.label :author, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :author, :class => 'form-control' %>
-      </div>
-      <%= error_span(@post[:author]) %>
-    </div>
-    <div class="control-group">
-      <%= f.label :title, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :title, :class => 'form-control' %>
-      </div>
-      <%= error_span(@post[:title]) %>
-    </div>
-    <div class="control-group">
-      <%= f.label :body, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :body, :class => 'form-control' %>
-      </div>
-      <%= error_span(@post[:body]) %>
-    </div>
-    <div class="control-group">
-      <%= f.label :post_tags_string, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :post_tags_string, :class => 'form-control' %>
-      </div>
-      <%= error_span(@post[:post_tags_string]) %>
-    </div>
-
-
-
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+<%= simple_form_for(@post, html: {class: 'form-vertical'}) do |f| %>
+    <%= f.input :author, required: false %>
+    <%= f.input :title, required: false %>
+    <%= f.input :body, required: false %>
+    <%= f.input :post_tags_string %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t('helpers.links.cancel')),
                 posts_path, :class => 'btn btn-default' %>
 
 <% end %>

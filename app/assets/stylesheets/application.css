@@ -13,3 +13,18 @@
  *= require_tree .
  *= require_self
  */
+
+.filter-by-tag {
+    border: 1px solid #999999;
+    padding: 5px;
+    border-radius: 25px;
+    margin: 0 5px;
+    line-height: 30px;
+}
+
+.filter-by-tag.active {
+    background-color: #7bb883;
+    color: white;
+}
+
+

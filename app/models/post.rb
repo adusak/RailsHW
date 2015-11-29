@@ -20,21 +20,15 @@ class Post < ActiveRecord::Base
   validates :body, presence: true
   validates :post_tags_string, tags_string: true
 
-  public
-
-  def tags_string
+  public def tags_string
     tags.map(&:name) * ', '
   end
 
-
-  private
-  def decrement_post_counter
+  private def decrement_post_counter
     tags.each { |t| t.decrement!(:post_count) }
   end
 
-  private
-
-  def parse_tags
+  private def parse_tags
     self.tags = []
     my_tags = post_tags_string.split(/[\s,.]+/).map(&:strip)
     my_tags.each do |name|
