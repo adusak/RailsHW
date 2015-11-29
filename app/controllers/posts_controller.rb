@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all.order('id DESC')
+    @posts = Post.all.order('updated_at DESC')
     @tags = Tag.ordered_all
   end
 

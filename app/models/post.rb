@@ -1,7 +1,7 @@
 class TagsStringValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value.split(/[\s,.]+/).map(&:strip).length > 0
-      record.errors[attribute] << (options[:message] || "must have at least one tag")
+      record.errors[attribute] << (options[:message] || 'must have at least one tag')
     end
   end
 end
@@ -31,8 +31,6 @@ class Post < ActiveRecord::Base
   def decrement_post_counter
     tags.each { |t| t.decrement!(:post_count) }
   end
-
-  private
 
   def parse_tags
     self.tags = []
