@@ -1,14 +1,13 @@
 <%- model_class = Post -%>
-<div class="page-header">
-  <a href="<%= posts_url %>">
-    <h1 class="text-center alert alert-info"><%= t('.title', :default => model_class.model_name.human.pluralize.titleize) %></h1>
-  </a>
-</div>
+<a href="<%= posts_url %>">
+  <h1 class="text-center alert alert-info"><%= t('.title', :default => model_class.model_name.human.pluralize.titleize) %></h1>
+</a>
 <% if notice %>
     <p id="notice" class="alert alert-success"><%= notice %></p>
     <hr/>
 <% end %>
-<div class="row" style="padding: 0px 10px">
+<div class="row text-center" style="padding: 0px 10px">
+  <h3>Filter by tag</h3>
   <% @tags.each do |tag| %>
       <%= link_to tag.name, {action: :filter, tag_name: tag.name}, class: "filter-by-tag #{'active' if params[:tag_name] == tag.name}" %></li>
   <% end %>
