@@ -35,21 +35,25 @@ class Post < ActiveRecord::Base
   def parse_and_save_tags
     my_tags = post_tags_string.split(/[\s,.]+/).map(&:strip).uniq
     names = tags.map(&:name)
-    to_add = my_tags - names
-    to_remove = names - my_tags
 
+    add_tags my_tags - names
+    remove_tags names - my_tags
+  end
+
+  def add_tags(to_add)
     to_add.each do |name|
       t = Tag.find_or_create_by(name: name)
       t.increment(:post_count)
       t.save
       tags << t
     end
+  end
 
+  def remove_tags(to_remove)
     to_remove.each do |name|
       t = Tag.find_by_name(name)
       t.decrement!(:post_count)
       tags.delete(t)
     end
-
   end
 end
